@@ -1,0 +1,32 @@
+version: "3"
+
+networks:
+  private:
+
+volumes:
+  data:
+
+services:
+  db:
+    image: postgres:11.2-alpine
+    environment:
+      POSTGRES_DB: web_app_db
+      POSTGRES_USER: lehungvi
+      POSTGRES_PASSWORD: lehungvi
+    ports:
+      - "5432:5432"
+    networks:
+      - private
+    volumes:
+      - data:/var/lib/postgresql/data
+  
+  python-web-app:
+    build: ./web_app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - private
+    environment: &env
+      DATABASE_URI: postgresql://lehungvi:lehungvi@db:5432/web_app_db
