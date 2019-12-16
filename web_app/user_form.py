@@ -8,10 +8,9 @@ from models import User
 
 
 class LoginForm(Form):
-    email = TextField('Email',
-            validators=[DataRequired(), Length(1, 64), Email()])
+    username = TextField('Username',
+            validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
-    remember_me = BooleanField('Keep me logged in')
     submit = SubmitField('Log In')
 
     def __init__(self, *args, **kwargs):
@@ -21,12 +20,9 @@ class LoginForm(Form):
         initial_validation = super(LoginForm, self).validate()
         if not initial_validation:
             return False
-        user = User.query.filter_by(email=self.email.data).first()
+        user = User.query.filter_by(username=self.username.data).first()
         if not user:
-            self.email.errors.append('Unknown email')
-            return False
-        if not user.verify_password(self.password.data):
-            self.password.errors.append('Invalid password')
+            self.username.errors.append('Unknown username')
             return False
         return True
 
@@ -38,9 +34,9 @@ class RegisterForm(Form):
             validators=[DataRequired(), Email(), Length(min=6, max=40)])
     password = PasswordField('Password',
             validators=[DataRequired(), Length(min=8, max=64)])
-    confirm = PasswordField('Verify password',
-            validators=[DataRequired(), EqualTo('password',
-            message='Passwords must match')])
+    fullname = TextField('Fullname',
+            validators=[DataRequired(), Length(min=3, max=32)])
+    submit = SubmitField('Register')
 
     def __init__(self, *args, **kwargs):
         super(RegisterForm, self).__init__(*args, **kwargs)

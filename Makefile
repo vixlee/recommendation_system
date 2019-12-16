@@ -2,7 +2,7 @@
 
 env:
 	virtualenv env -p /usr/bin/python3
-	env/bin/python env/bin/pip install -r requirement.txt -I
+	env/bin/python env/bin/pip install -r web_app/requirements.txt -I
 
 install: env
 	env/bin/python setup.py install

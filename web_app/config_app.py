@@ -14,3 +14,4 @@ SQLALCHEMY_DATABASE_URI = env(
     "DATABASE_URI",
     default="sqlite:///rs_web.developement.db"
 )
+SQLALCHEMY_TRACK_MODIFICATIONS=False

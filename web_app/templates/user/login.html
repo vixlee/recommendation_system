@@ -1,19 +1,14 @@
 {% extends "index.html" %}
-{% block title %} Register {% endblock %}
+{% block title %} Login {% endblock %}
 {% block head %}
     {{ super() }}
-    <style type="text/css">
-        .important { color: #336699; }
-    </style>
 {% endblock %}
 {% block content %}
     {% from "_formhelper.html" import render_field %}
-    <form action="{{url_for('user.register')}}", method="POST">
+    <form action="{{url_for('user.login')}}", method="POST">
         {{ form.csrf_token }}
         {{ render_field(form.username, class_="form-control") }}
-        {{ render_field(form.email, class_="form-control") }}
         {{ render_field(form.password, class_="form-control") }}
-        {{ render_field(form.fullname, class_="form-control") }}
         <div class="form-group">
             {{form.submit() }}
         </div>
